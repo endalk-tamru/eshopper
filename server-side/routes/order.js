@@ -1,6 +1,9 @@
 const express = require("express");
 const Order = require("../models/order");
-const { isAuthenticatedAndAdmin } = require("../middleware/auth");
+const {
+  isAuthenticatedAndAuthorized,
+  isAuthenticatedAndAdmin,
+} = require("../middleware/auth");
 
 const router = express.Router();
 
@@ -9,6 +12,16 @@ const router = express.Router();
 // @access  Private - Admin
 router.get("/", isAuthenticatedAndAdmin, (req, res) => {
   Order.find()
+    .sort({ createdAt: -1 })
+    .then((order) => res.status(200).json(order))
+    .catch((err) => res.status(500).json(err));
+});
+
+// @routes  GET api/order/history/:userId
+// @desc    Get LoggedIn user's order history
+// @access  Private - LoggedIn User
+router.get("/history/:id", isAuthenticatedAndAuthorized, (req, res) => {
+  Order.find({ userId: req.params.id })
     .sort({ createdAt: -1 })
     .then((order) => res.status(200).json(order))
     .catch((err) => res.status(500).json(err));

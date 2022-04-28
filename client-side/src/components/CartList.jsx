@@ -37,36 +37,39 @@ const CartList = () => {
         <div className="col-lg-8 table-responsive mb-5">
           {isLoading && <p className="display-4 mb-2 pl-3">Loading...</p>}
           {isError && <p className="display-4 mb-2 pl-3">{errorMsg}</p>}
-
-          <table className="table table-bordered text-center mb-0">
-            <thead className="bg-secondary text-dark">
-              <tr>
-                <th>Products</th>
-                <th>Price</th>
-                <th>Color & Size</th>
-                <th>Quantity</th>
-                <th>Total</th>
-                <th>Remove</th>
-              </tr>
-            </thead>
-            <tbody className="align-middle">
-              {isSuccess &&
-                cartInfo.products.slice(0).reverse().map((cart) => (
-                  <CartItem
-                    key={cart._id}
-                    cartId={cart._id}
-                    productId={cart.productId._id}
-                    imgUrl={cart.productId.imgUrl}
-                    title={cart.productId.title}
-                    price={cart.productId.price}
-                    color={cart.color}
-                    size={cart.size}
-                    totalPrice={cart.totalPrice}
-                    quantity={cart.quantity}
-                  />
-                ))} 
-            </tbody>
-          </table>
+          {isSuccess && cartInfo.products.length <= 0 && <p className="display-4 mb-2 pl-3">Your cart is empty!</p>}
+          
+          {isSuccess && cartInfo.products.length > 0 && 
+            <table className="table table-bordered text-center mb-0">
+              <thead className="bg-secondary text-dark">
+                <tr>
+                  <th>Products</th>
+                  <th>Price</th>
+                  <th>Color & Size</th>
+                  <th>Quantity</th>
+                  <th>Total</th>
+                  <th>Remove</th>
+                </tr>
+              </thead>
+              <tbody className="align-middle">
+                {isSuccess &&
+                  cartInfo.products.slice(0).reverse().map((cart) => (
+                    <CartItem
+                      key={cart._id}
+                      cartId={cart._id}
+                      productId={cart.productId._id}
+                      imgUrl={cart.productId.imgUrl}
+                      title={cart.productId.title}
+                      price={cart.productId.price}
+                      color={cart.color}
+                      size={cart.size}
+                      totalPrice={cart.totalPrice}
+                      quantity={cart.quantity}
+                    />
+                  ))} 
+              </tbody>
+            </table>
+          }
         </div>
 
         <Elements stripe={stripePromise}>

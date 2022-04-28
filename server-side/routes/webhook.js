@@ -29,7 +29,8 @@ router.post("/", async (req, res) => {
 
     const data = line_items.data.map((item) => {
       return {
-        customerId: session.customer,
+        userId: session.client_reference_id,
+        stripeCustomerId: session.customer,        
         customerName: session.customer_details.name,
         customerEmail: session.customer_details.email,
         address: session.customer_details.address.country,

@@ -3,7 +3,11 @@ const Schema = mongoose.Schema;
 
 const orderSchema = new Schema(
   {
-    customerId: {
+    userId: {
+      type: String,
+      required: true,
+    },
+    stripeCustomerId: {
       type: String,
       required: true,
     },

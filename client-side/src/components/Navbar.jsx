@@ -44,6 +44,11 @@ const Navbar = () => {
           <Link to="/contact" className="nav-item nav-link">
             Contact
           </Link>
+          {user && (
+            <Link to={`/order-history/${user.id}`} className="nav-item nav-link">
+              Order History
+            </Link>
+          )} 
         </div>
         <div className="navbar-nav ml-auto py-0">
           {!user && (

@@ -10,6 +10,7 @@ import Shop from "./pages/Shop";
 import Detail from "./pages/Detail";
 import Contact from "./pages/Contact";
 import Cart from "./pages/Cart";
+import Order from "./pages/Order";
 import CheckoutSuccess from "./pages/CheckoutSuccess";
 import { fetchCarts } from "./features/cartSlice";
 
@@ -37,6 +38,7 @@ function App() {
 
         <Route element={<ProtectedRoute isAuthenticated={user} />}>
           <Route path="/cart/:id" element={<Cart />} />
+          <Route path="/order-history/:id" element={<Order />} />
           <Route path="/success" element={<CheckoutSuccess />} />
         </Route>
       </Routes>

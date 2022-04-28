@@ -11,9 +11,9 @@ const initialState = {
 
 const BASE_URL = "/api/order/";
 
-export const addToOrder = createAsyncThunk(
-  "cart/addToOrder",
-  async (product, thunkAPI) => {
+export const fetchUserOrders = createAsyncThunk(
+  "cart/fetchUserOrders",
+  async (id, thunkAPI) => {
     try {
       const token = thunkAPI.getState().auth.token;
       const config = {
@@ -21,7 +21,7 @@ export const addToOrder = createAsyncThunk(
           ["x-auth-token"]: token,
         },
       };
-      const res = await axios.post(BASE_URL, product, config);
+      const res = await axios.get(BASE_URL + "/history/" + id, config);
       return res.data;
     } catch (err) {
       return thunkAPI.axiosrejectWithValue(err.response.data);
@@ -33,19 +33,19 @@ const orderSlice = createSlice({
   name: "order",
   initialState,
   extraReducers: {
-    [addToOrder.pending]: (state) => {
+    [fetchUserOrders.pending]: (state) => {
       state.isLoading = true;      
     },
-    [addToOrder.fulfilled]: (state, action) => {
+    [fetchUserOrders.fulfilled]: (state, action) => {
       state.isLoading = false;      
       state.isSuccess = true;            
       state.orders = action.payload;
     },
-    [addToOrder.rejected]: (state, action) => {
+    [fetchUserOrders.rejected]: (state, action) => {
       state.isLoading = false;            
       state.isError = true;
       state.errorMsg = action.payload.errMsg;
-    },
+    }    
   },
 });
 

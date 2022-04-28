@@ -71,8 +71,13 @@ const DetailBody = () => {
                                 </div>
                                 <small className="pt-1">({rateInfo.rateQty} Reviews)</small>
                             </div>
+                            
                             <h3 className="font-weight-semi-bold mb-4">{price}</h3>
-                            <p className="mb-4">{desc}</p>                                                                                        
+                            
+                            {desc?.split("\n").map((str, index) => (
+                                <p key={index} className="mb-4">{str}</p>
+                            ))}
+
                                 {/* Size Filter */}
                                 {isFilterEmpty && <p className="text-danger">Size & Color are required</p>}
                                 <div className="d-flex mb-3">
